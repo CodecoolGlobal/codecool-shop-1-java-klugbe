@@ -35,7 +35,9 @@
 <div class="jumbotron text-center">
     <h1>Codecool Shop</h1>
 </div>
-
+<a  id="cart-anchor" th:href="@{/cart/show}">
+    <img  src="https://img.icons8.com/color/96/000000/shopping-cart--v1.png"/>
+</a>
 <div class="container">
     <div class="card">
         <strong th:text="${category.name}">Category Title</strong>
