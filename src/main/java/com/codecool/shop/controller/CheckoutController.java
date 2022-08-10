@@ -24,5 +24,19 @@ public class CheckoutController extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String country = request.getParameter("country");
+        String zipCode = request.getParameter("cityCode");
+        String street = request.getParameter("street");
+        String houseNumber = request.getParameter("house-number");
+
+
+        String billingCountry = request.getParameter("billing-country");
+        String billingZipCode = request.getParameter("billing-cityCode");
+        String billingStreet = request.getParameter("billing-street");
+        String billingHouseNumber = request.getParameter("billing-house-number");
+
+        String paymentType = request.getParameter("payment-type");
     }
 }
