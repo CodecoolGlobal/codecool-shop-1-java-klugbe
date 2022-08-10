@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -23,6 +24,35 @@ public class CheckoutController extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        ArrayList<String> detailsOfOrder = new ArrayList<>();
+
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String country = request.getParameter("country");
+        String zipCode = request.getParameter("cityCode");
+        String street = request.getParameter("street");
+        String houseNumber = request.getParameter("house-number");
+
+
+        String billingCountry = request.getParameter("billing-country");
+        String billingZipCode = request.getParameter("billing-cityCode");
+        String billingStreet = request.getParameter("billing-street");
+        String billingHouseNumber = request.getParameter("billing-house-number");
+        String paymentType = request.getParameter("payment-type");
+
+
+        detailsOfOrder.add(name);
+        detailsOfOrder.add(email);
+        detailsOfOrder.add(country);
+        detailsOfOrder.add(zipCode);
+        detailsOfOrder.add(street);
+        detailsOfOrder.add(houseNumber);
+        detailsOfOrder.add(billingCountry);
+        detailsOfOrder.add(billingZipCode);
+        detailsOfOrder.add(billingStreet);
+        detailsOfOrder.add(billingHouseNumber);
+        detailsOfOrder.add(paymentType);
 
     }
 }
