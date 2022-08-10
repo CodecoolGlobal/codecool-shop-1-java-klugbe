@@ -4,12 +4,13 @@ main();
 
 
 function main(){
-    const addProductButtons = document.querySelector(".addProduct");
+    const addProductButtons = document.querySelectorAll(".addProduct");
     addProductButtons.forEach((button)=> button.addEventListener("click", addProductToCart))
 
     console.log("cart.js works")
 }
 
-function addProductToCart(event){
-    console.log(event)
+async function addProductToCart(event){
+    const productId = event.currentTarget.getAttribute("data-id");
+    await dataHandler.addProductToCart(productId);  
 }
