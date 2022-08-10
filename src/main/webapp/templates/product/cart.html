@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<script src="static/javascript/Cart.js" type="module" defer></script>
 <head>
     <meta charset="UTF-8">
     <title>Cart</title>
 </head>
 <body>
 <div id="cart">
-    <div class="cart-item"></div>
     <div class="cart-item" th:each="item :${cartItems.keySet()}">
         <h1 th:text="${item.name}">Hello<"}></h1>
+        <label>Quantity:
+            <select name="item-quantity">
+                <option th:each="number:${#numbers.sequence(1,10)}"
+                        th:value="${number}"
+                        th:text="${number}"
+                        th:selected="${cartItems.get(item) == number} ? true : false">
+                </option>
+            </select>
+        </label>
         <p th:text="${cartItems.get(item)}"></p>
 
     </div>

@@ -12,5 +12,5 @@ function main(){
 
 async function addProductToCart(event){
     const productId = event.currentTarget.getAttribute("data-id");
-    await dataHandler.addProductToCart(productId);  
+    await dataHandler.addProductToCart(productId);
 }
