@@ -20,9 +20,20 @@ public class CheckoutController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         TemplateEngine templateEngine = TemplateEngineUtil.getTemplateEngine(request.getServletContext());
         WebContext webContext = new WebContext(request,response, getServletContext());
+        String sessionId = request.getRequestedSessionId();
+        double cartValue = fetchCartValue(sessionId);
+        webContext.setVariable("value", cartValue);
         templateEngine.process("checkout.html", webContext, response.getWriter());
     }
 
+    private double fetchCartValue(String sessionId) {
+    return 0;
+    }
+
+
+
+
+/*
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         ArrayList<String> detailsOfOrder = new ArrayList<>();
@@ -54,5 +65,5 @@ public class CheckoutController extends HttpServlet {
         detailsOfOrder.add(billingHouseNumber);
         detailsOfOrder.add(paymentType);
 
-    }
+ */
 }
