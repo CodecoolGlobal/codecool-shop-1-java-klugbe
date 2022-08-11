@@ -23,83 +23,178 @@
 <link href="https://cdn.lineicons.com/3.0/lineicons.css" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="/static/css/custom.css"/>
+
 <body>
 
-    <form th:action="@{/checkout}" th:method="post">
-
-    <div id="shipment-info" class="form">
-        <div class="input">
-            <label for="name">Enter your firstname: </label>
-            <input type="text" name="name" id="name" required>
-        </div> <br>
-        <div class="input">
-            <label for="name">Enter your lastname: </label>
-            <input type="text" name="name" id="last-name" required>
-        </div> <br>
-        <div class="input">
-            <label for="email">Enter your email: </label>
-            <input type="email" name="email" id="email" required>
-        </div> <br>
-        <div class="input">
-            <label for="email-confirmation">Please enter your email again: </label>
-            <input type="email" name="email-confirmation" id="email-confirmation" required>
-        </div> <br>
-
-
-        <select id="billing-country" name="country">
-            <option value="Hungary">Hungary</option>
-            <option value="England">England</option>
-            <option value="France">France</option>
-            <option value="Germany">Germany</option>
-        </select>
-
- <br>
-        <div class="input">
-            <label for="city-code">Enter ZIP code: </label>
-            <input type="text" name="city-code" id="city-code" required>
-        </div>  <br>
-        <div class="input">
-            <label for="street">Enter street: </label>
-            <input type="text" name="street" id="street" required>
-        </div> <br>
-        <div class="input">
-            <label for="house-number">Enter house number: </label>
-            <input type="text" name="house-number" id="house-number" required>
-        </div>  <br>
-
-        <div id="billing-info">
-
-    <select id="country" name="country">
-        <option value="Hungary">Hungary</option>
-        <option value="England">England</option>
-        <option value="France">France</option>
-        <option value="Germany">Germany</option>
-
-    </select>
-<br>
-            <div class="input">
-        <label for="billing-city-code">Enter ZIP code: </label>
-        <input type="text" name="billing-city-code" id="billing-city-code" required>
-    </div> <br>
-            <div class="input">
-        <label for="billing-street">Enter street: </label>
-        <input type="text" name="billing-street" id="billing-street" required>
-    </div> <br>
-            <div class="input">
-        <label for="billing-house-number">Enter house number: </label>
-        <input type="text" name="billing-house-number" id="billing-house-number" required>
-    </div> <br>
-        </div>
-<div id="payment-info" class="form">
-    <select id="payment-type" name="payment">
-        <option value="paypal">Paypal</option>
-        <option value="credit-card">Credit card</option>
-    </select> <br>
-</div> <br>
-        <button type="submit">Process checkout</button>
+<div class="jumbotron text-center">
+    <h1>Codecool Shop</h1>
 </div>
+<div class="checkout-container">
+
+
+    <form th:action="@{/checkout}" th:method="post">
+        <div class="row">
+            <div class="col-md-8 mb-4">
+                <div class="card mb-4">
+                    <div class="card-header py-3">
+                        <h4 class="text-danger">User Information</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+
+        <div class="col">
+        <div class="form-outline">
+            <label label = "form-label" for="input-first-name">Enter your firstname: </label>
+            <input type="text" id="input-first-name" class="form-control" required/>
+        </div>
+        </div>
+                                <br>
+
+
+        <div class="col">
+        <div class="form-outline">
+            <label for="input-last-name">Enter your lastname: </label>
+            <input type="text" id="input-last-name" class = "form-control" required/>
+        </div>
+
+                                <br>
+
+            <div class="form-outline mb-4">
+                <input type="email" id="input-email" class="form-control"/>
+                <label class="form-label" for="input-email">Enter email</label>
+            </div>
+
+            <div class="form-outline mb-4">
+                <input type="number" id="input-phone" class="form-control"/>
+                <label class="form-label" for="input-phone">Enter phone</label>
+            </div>
+        </div>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4 mb-4">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="text-danger">Summary</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
+                                        Products
+                                        <span th:text="${value}">$53.98</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                        Shipping
+                                        <span>Free</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
+                                        <div>
+                                            <strong>Total amount</strong>
+                                            <strong>
+                                                <p class="mb-0">(including VAT)</p>
+                                            </strong>
+                                        </div>
+                                        <span><strong th:text="${value}">$53.98</strong></span>
+                                    </li>
+                                </ul>
+
+                                <button type="submit" class="btn btn-primary btn-lg btn-block">
+                                    Make purchase
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="text-danger">Billing Address</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input type="number" id="input-billing-zip" class="form-control"/>
+                                            <label class="form-label" for="input-billing-zip">Enter ZIP</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input type="text" id="input-billing-city" class="form-control"/>
+                                            <label class="form-label" for="input-billing-city">Enter city</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="input-billing-address" class="form-control"/>
+                                    <label class="form-label" for="input-billing-address">Enter Address</label>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="input-billing-country" class="form-control"/>
+                                    <label class="form-label" for="input-billing-country">Enter Address</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="col-md-8 mb-4">
+                        <div class="card mb-4">
+                            <div class="card-header py-3">
+                                <h5 class="text-danger">Delivery Address</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <div class="row mb-4">
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input type="number" id="input-delivery-zip" class="form-control"/>
+                                            <label class="form-label" for="input-delivery-zip">Enter ZIP</label>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <div class="form-outline">
+                                            <input type="text" id="input-delivery-city" class="form-control"/>
+                                            <label class="form-label" for="input-delivery-city">Enter city</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="input-delivery-address" class="form-control"/>
+                                    <label class="form-label" for="input-delivery-address">Enter address</label>
+                                </div>
+                                <div class="form-outline mb-4">
+                                    <input type="text" id="input-delivery-country" class="form-control"/>
+                                    <label class="form-label" for="input-delivery-country">Enter country</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
 
     </form>
+
+
+</div>
+
+<div th:replace="footer.html :: copy"></div>
+
+
 
 </body>
 </html>
