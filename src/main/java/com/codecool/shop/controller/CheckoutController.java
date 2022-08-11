@@ -8,6 +8,8 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
+import com.codecool.shop.config.routeConf;
+import org.apache.http.HttpResponse;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.http.HttpResponse;
+
 import java.nio.charset.StandardCharsets;
 
 
@@ -37,7 +39,7 @@ public class CheckoutController extends HttpServlet {
     private double fetchCartValue(String sessionId) {
         System.out.println("Receiving");
         CloseableHttpClient client = HttpClientBuilder.create().build();
-        URIBuilder builder = new URIBuilder(RouteConfiguration.URI_API_GET_CART_VALUE);
+        URIBuilder builder = new URIBuilder(routeConf.URI_API_GET_CART_VALUE);
         builder.setParameter("id", sessionId);
 
         try {
