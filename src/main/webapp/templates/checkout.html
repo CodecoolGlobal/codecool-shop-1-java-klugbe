@@ -27,7 +27,7 @@
 <body>
 
 <div class="jumbotron text-center">
-    <h1>Codecool Shop</h1>
+    <h1>Shop</h1>
 </div>
 <div class="checkout-container">
 
@@ -36,7 +36,7 @@
         <div class="row">
             <div class="col-md-8 mb-4">
                 <div class="card mb-4">
-                    <div class="card-header py-3">
+                    <div class="card-header py-12">
                         <h4 class="text-danger">User Information</h4>
                     </div>
                     <div class="card-body">
@@ -64,17 +64,24 @@
                 <label class="form-label" for="input-email">Enter email</label>
             </div>
 
+                                 <br>
+
             <div class="form-outline mb-4">
                 <input type="number" id="input-phone" class="form-control"/>
                 <label class="form-label" for="input-phone">Enter phone</label>
             </div>
         </div>
+
+                                <br>
+                                <br>
+                                <br>
+
                         </div>
                     </div>
 
 
                     <div class="col-md-4 mb-4">
-                        <div class="card mb-4">
+                        <div class="card mb-2">
                             <div class="card-header py-3">
                                 <h5 class="text-danger">Summary</h5>
                             </div>
@@ -91,16 +98,13 @@
                                     <li class="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                                         <div>
                                             <strong>Total amount</strong>
-                                            <strong>
-                                                <p class="mb-0">(including VAT)</p>
-                                            </strong>
                                         </div>
                                         <span><strong th:text="${value}">$53.98</strong></span>
                                     </li>
                                 </ul>
 
                                 <button type="submit" class="btn btn-primary btn-lg btn-block">
-                                    Make purchase
+                                    purchase
                                 </button>
                             </div>
                         </div>
@@ -135,10 +139,14 @@
                                     <label class="form-label" for="input-billing-address">Enter Address</label>
                                 </div>
 
+                                <br>
+
                                 <div class="form-outline mb-4">
                                     <input type="text" id="input-billing-country" class="form-control"/>
-                                    <label class="form-label" for="input-billing-country">Enter Address</label>
+                                    <label class="form-label" for="input-billing-country">Enter country</label>
                                 </div>
+
+                                <br>
 
                             </div>
                         </div>
