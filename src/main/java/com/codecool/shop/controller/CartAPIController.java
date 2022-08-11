@@ -1,35 +1,39 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.TemplateEngineUtil;
-import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductDao;
-import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.model.Product;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
 
-import javax.servlet.ServletException;
+import com.codecool.shop.dao.CartDao;
+import com.codecool.shop.dao.implementation.CartDaoMem;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.model.CartItem;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONObject;
+
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
+import java.nio.charset.StandardCharsets;
 
 
-@WebServlet(urlPatterns = {"/cart"})
-public class CartAPIController extends HttpServlet {
+@WebServlet(urlPatterns = {"/api/cart"}, loadOnStartup = 2)
+public class CartApiController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        ProductDao productDaoStore = ProductDaoMem.getInstance();
-        CartDao cart = CartDaoMem.getInstance();
-        Map<Product, Integer> cartItems = cart.getAll();
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
+        JSONObject jsonObject = new JSONObject(data);
 
-        TemplateEngine engine =  TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
-        context.setVariable("cartItems", cartItems);
-        engine.process("product/cart.html", context, response.getWriter());
+        CartDao cartDaoDataStorage = CartDaoMem.getInstance();
+        int id = jsonObject.getInt("id");
+        double price = jsonObject.getDouble("price-value");
+        String name = jsonObject.getString("name");
+        String sessionId = jsonObject.getString("session");
+
+        CartItem cartItem = new CartItem(id, price, name);
+        Cart cart = cartDaoDataStorage.getCart(sessionId);
+        cart.add(cartItem);
+        resp.sendRedirect("/");
     }
 }
+
