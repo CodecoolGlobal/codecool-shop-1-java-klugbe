@@ -19,7 +19,7 @@ import java.util.Map;
 
 
 @WebServlet(urlPatterns = {"/cart"})
-public class CartController extends HttpServlet {
+public class CartAPIController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
