@@ -1,6 +1,10 @@
 package com.codecool.shop.controller;
 
 import com.codecool.shop.config.TemplateEngineUtil;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
@@ -11,7 +15,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import org.json.simple.JSONObject;
+
 
 @WebServlet(name = "Checkout", urlPatterns = {"/checkout"})
 public class CheckoutController extends HttpServlet {
@@ -27,43 +38,22 @@ public class CheckoutController extends HttpServlet {
     }
 
     private double fetchCartValue(String sessionId) {
-    return 0;
+        System.out.println("Receiving");
+        CloseableHttpClient client = HttpClientBuilder.create().build();
+        URIBuilder builder = new URIBuilder(RouteConfiguration.URI_API_GET_CART_VALUE);
+        builder.setParameter("id", sessionId);
+
+        try {
+            HttpGet request = new HttpGet(builder.build());
+            HttpResponse response = (HttpResponse) client.execute(request);
+
+            InputStream reader = response.getEntity().getContent();
+            String jsonString = new String(reader.readAllBytes(), StandardCharsets.UTF_8);
+            JSONObject jsonObject = new JSONObject(jsonString);
+            return jsonObject.getDouble("totalPrice");
+
+        } catch (IOException | URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
     }
-
-
-
-
-/*
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        ArrayList<String> detailsOfOrder = new ArrayList<>();
-
-        String name = request.getParameter("name");
-        String email = request.getParameter("email");
-        String country = request.getParameter("country");
-        String zipCode = request.getParameter("cityCode");
-        String street = request.getParameter("street");
-        String houseNumber = request.getParameter("house-number");
-
-
-        String billingCountry = request.getParameter("billing-country");
-        String billingZipCode = request.getParameter("billing-cityCode");
-        String billingStreet = request.getParameter("billing-street");
-        String billingHouseNumber = request.getParameter("billing-house-number");
-        String paymentType = request.getParameter("payment-type");
-
-
-        detailsOfOrder.add(name);
-        detailsOfOrder.add(email);
-        detailsOfOrder.add(country);
-        detailsOfOrder.add(zipCode);
-        detailsOfOrder.add(street);
-        detailsOfOrder.add(houseNumber);
-        detailsOfOrder.add(billingCountry);
-        detailsOfOrder.add(billingZipCode);
-        detailsOfOrder.add(billingStreet);
-        detailsOfOrder.add(billingHouseNumber);
-        detailsOfOrder.add(paymentType);
-
- */
 }
