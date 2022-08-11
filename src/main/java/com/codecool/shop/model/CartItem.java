@@ -1,29 +1,54 @@
 package com.codecool.shop.model;
 
+
 public class CartItem {
 
-    private final int productId;
-    private int quantity;
+    private final int id;
 
-    public CartItem(int productId, int quantity) {
-        this.productId = productId;
-        this.quantity = quantity;
+    private final double price;
+
+    private final String name;
+
+    private int count;
+
+    private double totalPrice;
+
+
+    public CartItem(int id, double price, String name) {
+        this.id = id;
+        this.price = price;
+        this.name = name;
     }
 
-    public int getProductId() {
-        return productId;
+    public int getId() {
+        return this.id;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public double getPrice() {
+        return this.price;
     }
 
-    public void increaseQuantity() {
-        quantity++;
+    public String getName() {
+        return this.name;
     }
 
-    public void decreaseQuantity() {
-        quantity--;
+    public int getCount() {
+        return this.count;
     }
 
+    public double getTotalPrice() {
+        return this.totalPrice;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
+
+    public String toString() {
+        return "CartItem(id=" + this.getId() + ", price=" + this.getPrice() + ", name=" + this.getName() + ", count=" + this.getCount() + ", totalPrice=" + this.getTotalPrice() + ")";
+    }
 }
