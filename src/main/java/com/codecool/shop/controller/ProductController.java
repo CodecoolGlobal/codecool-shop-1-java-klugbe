@@ -1,4 +1,4 @@
-package com.codecool.shop.controller;
+/*package com.codecool.shop.controller;
 
 import com.codecool.shop.dao.ProductCategoryDao;
 import com.codecool.shop.dao.ProductDao;
@@ -40,3 +40,4 @@ public class ProductController extends HttpServlet {
     }
 
 }
+*/
