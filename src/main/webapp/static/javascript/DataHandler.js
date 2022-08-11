@@ -1,36 +1,76 @@
-
-    export const dataHandler = {
-
-    addProductToCart: async function(productId){
-        await apiPost("/api/add-to-cart", productId);
-    }
-
-    }
-
-
-    async function apiGet(url) {
-        const response = await fetch(url, {
-            method : "GET",
+export const dataHandler = {
+    addProductToCart: async function (productId) {
+        await apiPost("/api/add-to-cart", {
+            "productId": parseInt(productId)
         });
-        if(response.status < 300) {
-            return response.json();
+    },
+    getProducts: async function(supplierId, categoryId) {
+        return await apiGet(`api/products${createQueryParams(supplierId, categoryId)}`)
+    },
+    getCart: async function () {
+        return await apiGet("/api/cart-items");
+    },
+    editCart: async function (productId, quantity) {
+        await apiPost("/api/edit-cart",
+            {
+                "productId": parseInt(productId),
+                "quantity": parseInt(quantity)
+            });
+    },
+    removeItemFromCart: async function (productId) {
+        await apiDelete(`/api/remove-from-cart?product-id=${productId}`);
+    }
+};
+
+function createQueryParams(supplierId, categoryId) {
+    let query = "";
+    if (supplierId.length > 0) {
+        if (categoryId.length > 0) {
+            query = `?supplier_id=${supplierId.toString()}&category_id=${categoryId.toString()}`;
+        } else {
+            query = `?supplier_id=${supplierId.toString()}`;
         }
+    } else if (categoryId.length > 0) {
+        query = `?category_id=${categoryId.toString()}`;
     }
+    return query;
+}
 
-
-    async function apiPost(url, data) {
-        const response = await fetch(url, {
-            method : "POST",
-            headers : {
-                "Content-type" : "application/json"
-            },
-            body : JSON.stringify(data)
+async function apiGet(url) {
+    const response = await fetch(url,
+        {
+            method: "GET",
         });
+    if (response.status <= 299) {
+        return response.json();
+    }
+}
+
+async function apiPost(url, data, returnValue = false) {
+    const response = await fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+    if (returnValue) {
         return await response.json();
     }
+}
 
-    async function apiDelete(url) {
-        await fetch(url, {
-            method: "DELETE"
-        });
-    }
+async function apiPut(url, data) {
+    await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+async function apiDelete(url) {
+    await fetch(url, {
+        method: "DELETE"
+    });
+}
