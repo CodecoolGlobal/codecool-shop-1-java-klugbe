@@ -7,12 +7,16 @@
 
 <body>
 
-    <form action="/checkout" method="post">
+    <form th:action="@{/checkout}" th:method="post">
 
     <div id="shipment-info" class="form">
         <div class="input">
-            <label for="name">Enter your name: </label>
+            <label for="name">Enter your firstname: </label>
             <input type="text" name="name" id="name" required>
+        </div> <br>
+        <div class="input">
+            <label for="name">Enter your lastname: </label>
+            <input type="text" name="name" id="last-name" required>
         </div> <br>
         <div class="input">
             <label for="email">Enter your email: </label>
