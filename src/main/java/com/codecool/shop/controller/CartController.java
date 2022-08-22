@@ -1,11 +1,10 @@
 package com.codecool.shop.controller;
 
-import com.codecool.shop.config.TemplateEngineUtil;
 import com.codecool.shop.dao.CartDao;
-import com.codecool.shop.dao.ProductDao;
 import com.codecool.shop.dao.implementation.CartDaoMem;
-import com.codecool.shop.dao.implementation.ProductDaoMem;
-import com.codecool.shop.model.Product;
+import com.codecool.shop.model.Cart;
+import com.codecool.shop.service.CartService;
+import com.codecool.shop.config.TemplateEngineUtil;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.WebContext;
 
@@ -15,21 +14,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Map;
 
-
-@WebServlet(urlPatterns = {"/cart"})
+@WebServlet(urlPatterns = {"/cart/show"}, loadOnStartup = 1)
 public class CartController extends HttpServlet {
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-        ProductDao productDaoStore = ProductDaoMem.getInstance();
-        CartDao cart = CartDaoMem.getInstance();
-        Map<Product, Integer> cartItems = cart.getAll();
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        CartDao cartDao = CartDaoMem.getInstance();
+        CartService cartService = new CartService(cartDao);
+        TemplateEngine engine = TemplateEngineUtil.getTemplateEngine(req.getServletContext());
+        WebContext context = new WebContext(req, resp, req.getServletContext());
 
-        TemplateEngine engine =  TemplateEngineUtil.getTemplateEngine(request.getServletContext());
-        WebContext context = new WebContext(request, response, request.getServletContext());
-        context.setVariable("cartItems", cartItems);
-        engine.process("product/cart.html", context, response.getWriter());
+        String sessionId = req.getRequestedSessionId();
+        context.setVariable("cart", cartService.getCart(sessionId));
+        engine.process("cart/cart.html", context, resp.getWriter());
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        CartDao  cartDao = CartDaoMem.getInstance();
+        String newCountString = req.getParameter("count");
+        String productIdString = req.getParameter("productId");
+        int newCount = Integer.parseInt(newCountString);
+        int productId = Integer.parseInt(productIdString);
+
+        String sessionId = req.getRequestedSessionId();
+        Cart cart = cartDao.getCart(sessionId);
+
+        cart.setCount(productId, newCount);
+        resp.sendRedirect("/cart/show");
+    }
+
 }
