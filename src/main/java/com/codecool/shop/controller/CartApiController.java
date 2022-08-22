@@ -22,7 +22,6 @@ public class CartApiController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String data = IOUtils.toString(req.getInputStream(), StandardCharsets.UTF_8);
-        //parses Json string to Json Object, so you can access like a hashmap
         JSONObject jsonObject = new JSONObject(data);
 
         CartDao cartDaoDataStorage = CartDaoMem.getInstance();
@@ -31,10 +30,7 @@ public class CartApiController extends HttpServlet {
         String name = jsonObject.getString("name");
         String sessionId = jsonObject.getString("session");
 
-//        get Cart of this Session
-//        ?does a cartDaoMem hold a List of all active carts?
         CartItem cartItem = new CartItem(id, price, name);
-//        add CartItem into the cart of the Session
         Cart cart = cartDaoDataStorage.getCart(sessionId);
         cart.add(cartItem);
         resp.sendRedirect("/");
